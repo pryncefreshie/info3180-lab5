@@ -51,7 +51,8 @@ def login():
             next_page = request.args.get('next')
             # remember to flash a message to the user
             flash("Login Successful", "success")
-            print next_page
+            #print next_page
+            #next_page = request.args.get('next')
             return redirect(url_for("secure"))  # they should be redirected to a secure-page route instead
             
         flash("login failed", 'danger')
@@ -61,6 +62,14 @@ def login():
 @login_required
 def secure():
     return render_template('secure.html')
+    
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    
+    flash('Logged out', 'success')
+    return redirect(url_for("home"))
 
 
 # user_loader callback. This callback is used to reload the user object from
